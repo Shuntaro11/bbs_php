@@ -22,9 +22,9 @@
 
   $msg = '会員登録が完了しました';
 
-  // $link = '<a href="login.php">ログインページ</a>';
+  $link = '<a href="index.php">ホーム</a>';
 
 ?>
 
-<h1><?php echo $msg; ?></h1><!--メッセージの出力-->
-<?php echo $link; ?>
+<p><?php echo $msg; ?></p><!--メッセージの出力-->
+<p><?php echo $link; ?></p>
