@@ -8,7 +8,7 @@
   $email = $_POST['email'];
   
   $method = 'aes-256-cbc';
-  $encryptedemail = openssl_encrypt($email, $method, $password);
+  $encryptedemail = openssl_encrypt($email, $method, KEY);
   
   $sql = "INSERT INTO bbs_php.users(uniquid, user_name, email, password, created_at) VALUES(:uniquid, :user_name, :email, :password, now())";
 
