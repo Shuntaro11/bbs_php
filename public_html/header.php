@@ -6,5 +6,5 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>BBS</title>
+    <title>SHUN BBS</title>
   </head>
