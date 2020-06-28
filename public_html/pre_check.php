@@ -34,7 +34,7 @@
     $encryptedpassword = openssl_encrypt($password, $method, KEY);
     
     // アドレスが既に登録されているか判定
-    $sql = "SELECT * FROM pre_users WHERE email = :encryptedemail";
+    $sql = "SELECT * FROM users WHERE email = :encryptedemail";
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':encryptedemail', $encryptedemail);
     $stmt->execute();
@@ -51,7 +51,7 @@
   if (count($errors) === 0){
 	
     $urltoken = hash('sha256',uniqid(rand(),1));
-    $url = "http://◯◯◯.co.jp/registration_form.php"."?urltoken=".$urltoken;
+    $url = "http://localhost/bbs_php/public_html/registration_form.php"."?urltoken=".$urltoken;
     
     //ここでデータベースに登録する
     try{
@@ -131,8 +131,8 @@
         echo "<p>".$value."</p>";
       }
       ?>
-      <input type="button" value="戻る" onClick="history.back()">
+      <input class="btn" type="button" value="戻る" onClick="history.back()">
     <?php endif; ?>
-    <p><button><a href="index.php">ホーム</a></button></p>
+    <p><a class="btn" href="index.php">ホーム</a></p>
   </body>
 </html>
