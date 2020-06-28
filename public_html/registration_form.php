@@ -14,7 +14,7 @@
   $errors = array();
  
   if(empty($_GET)) {
-    header("Location: temporary_registration_form.php");
+    header("Location: pre_registration_form.php");
     exit();
   }else{
     //GETデータを変数に入れる
@@ -39,13 +39,13 @@
 
           $user = $stmt->fetch();
 
-          $encryptedemail = $user[email];
-          $encryptedpassword = $user[password];
+          $encrypted_email = $user[email];
+          $encrypted_password = $user[password];
 
           // 仮登録したアドレスとパスワードを復号化
           $method = 'aes-256-cbc';
-          $password = openssl_decrypt($encryptedpassword, $method, KEY);
-          $email = openssl_decrypt($encryptedemail, $method, KEY);
+          $password = openssl_decrypt($encrypted_password, $method, KEY);
+          $email = openssl_decrypt($encrypted_email, $method, KEY);
           $_SESSION['email'] = $email;
 
           $user_name = $user[user_name];
@@ -69,28 +69,37 @@
 ?>
 
   <body>
+
     <h1>会員登録</h1>
     <?php if (count($errors) === 0): ?>
-    <form action="registration_check.php" method="post">
-      <label>メールアドレス<label>
-      <p><?=htmlspecialchars($email, ENT_QUOTES, 'UTF-8')?></p>
-      <label>名前<label>
-      <p><input type="text" name="user_name" value="<?=$user_name?>"></p>
-      <label>パスワード<label>
-      <p><input type="text" name="password" value="<?=$password?>"></p>
-      <input type="hidden" name="token" value="<?=$token?>">
-      <input class="btn" type="submit" value="確認する">
-    </form>
+
+      <form action="check.php" method="post">
+        <label>メールアドレス<label>
+        <p><?=htmlspecialchars($email, ENT_QUOTES, 'UTF-8')?></p>
+
+        <label>名前<label>
+        <p><input type="text" name="user_name" id="name" size="20" onblur="judgeName()" value="<?=$user_name?>"></p>
+        <p class="error-massage" id="name_error"></p>
+
+        <label>パスワード<label>
+        <p><input type="text" name="password" id="password" size="20" onblur="judgePassword()" value="<?=$password?>"></p>
+        <p class="error-massage" id="password_error"></p>
+
+        <input type="hidden" name="token" value="<?=$token?>">
+        <input class="btn" type="submit" value="確認">
+      </form>
 
     <?php elseif(count($errors) > 0): ?>
     
-    <?php
-    foreach($errors as $value){
-      echo "<p>".$value."</p>";
-    }
-    ?>
+      <?php
+      foreach($errors as $value){
+        echo "<p class='error-massage'>".$value."</p>";
+      }
+      ?>
       
     <?php endif; ?>
-    
+
+    <script type="text/javascript" src="../js/form_validation.js"></script>
+
   </body>
 </html>

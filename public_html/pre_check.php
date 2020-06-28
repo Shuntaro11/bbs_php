@@ -17,7 +17,7 @@
  
   if(empty($_POST)) {
 
-    header("Location: temporary_registration_form.php");// リダイレクト
+    header("Location: pre_registration_form.php");// リダイレクト
     exit();
 
   }else{
@@ -28,15 +28,15 @@
 
     // アドレスを暗号化
     $method = 'aes-256-cbc';
-    $encryptedemail = openssl_encrypt($email, $method, KEY);
+    $encrypted_email = openssl_encrypt($email, $method, KEY);
 
     // パスワードを暗号化
-    $encryptedpassword = openssl_encrypt($password, $method, KEY);
+    $encrypted_password = openssl_encrypt($password, $method, KEY);
     
     // アドレスが既に登録されているか判定
-    $sql = "SELECT * FROM users WHERE email = :encryptedemail";
+    $sql = "SELECT * FROM users WHERE email = :encrypted_email";
     $stmt = $pdo->prepare($sql);
-    $stmt->bindValue(':encryptedemail', $encryptedemail);
+    $stmt->bindValue(':encrypted_email', $encrypted_email);
     $stmt->execute();
     $user = $stmt->fetch();
 
@@ -58,15 +58,15 @@
       // ユニークidを作成
       $uniquid = uniqid(rand().'_');
 
-      $sql = "INSERT INTO bbs_php.pre_users(uniquid, urltoken, user_name, email, password, date) VALUES(:uniquid, :urltoken, :user_name, :email, :password, now())";
+      $sql = "INSERT INTO pre_users(uniquid, urltoken, user_name, email, password, date) VALUES(:uniquid, :urltoken, :user_name, :encrypted_email, :encrypted_password, now())";
 
       $stmt = $pdo -> prepare($sql);
 
       $stmt->bindValue(':uniquid', $uniquid, PDO::PARAM_STR);
       $stmt->bindValue(':urltoken', $urltoken, PDO::PARAM_STR);
       $stmt->bindValue(':user_name', $user_name, PDO::PARAM_STR);
-      $stmt->bindValue(':email', $encryptedemail, PDO::PARAM_STR);
-      $stmt->bindValue(':password', $encryptedpassword, PDO::PARAM_STR);
+      $stmt->bindValue(':encrypted_email', $encrypted_email, PDO::PARAM_STR);
+      $stmt->bindValue(':encrypted_password', $encrypted_password, PDO::PARAM_STR);
       $stmt->execute();
         
       //データベース接続切断
@@ -128,7 +128,7 @@
     <?php elseif(count($errors) > 0): ?>
       <?php
       foreach($errors as $value){
-        echo "<p>".$value."</p>";
+        echo "<p class='error-massage'>".$value."</p>";
       }
       ?>
       <input class="btn" type="button" value="戻る" onClick="history.back()">
