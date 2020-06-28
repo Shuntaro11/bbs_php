@@ -3,6 +3,6 @@
 ?>
   <body>
     <h1 class="main-title">SHUN BBS</h1>
-    <a href="signup.php">サインアップ</a>
+    <a href="temporary_registration_form.php">サインアップ</a>
   </body>
 </html>

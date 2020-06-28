@@ -133,5 +133,6 @@
       ?>
       <input type="button" value="戻る" onClick="history.back()">
     <?php endif; ?>
+    <p><button><a href="index.php">ホーム</a></button></p>
   </body>
 </html>
