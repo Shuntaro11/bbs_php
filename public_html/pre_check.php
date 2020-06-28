@@ -122,10 +122,11 @@
 ?>
 
   <body>
-    <h1>メール確認画面</h1>
     <?php if (count($errors) === 0): ?>
+      <h1>認証メール</h1>
       <p><?=$message?></p>
     <?php elseif(count($errors) > 0): ?>
+      <h1>認証メールを送信できません</h1>
       <?php
       foreach($errors as $value){
         echo "<p class='error-massage'>".$value."</p>";
