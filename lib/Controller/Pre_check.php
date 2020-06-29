@@ -29,6 +29,7 @@
     // パスワードを暗号化
     $encrypted_password = openssl_encrypt($password, $method, KEY);
     
+    // アドレスが既に登録されているか判定
     require_once( "../lib/Model/Judge_email.php" );
 
     require_once( "../lib/Functions/form_validation.php" );

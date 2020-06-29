@@ -16,7 +16,7 @@
     //ここでpre_usersテーブルに登録する
     try{
       
-      require_once( "../lib/Model/Pre_users_registration.php" );
+      require_once( "../lib/Model/Pre_user_registration.php" );
 
     }catch (PDOException $e){
       print('Error:'.$e->getMessage());
