@@ -1,5 +1,5 @@
 <?php
-
+  
   // バリデーション
   if(strlen($email) === 0){
     $errors['email'] = "アドレスが入力されていません。";
@@ -17,6 +17,6 @@
     $errors['password'] = "パスワードが入力されていません。";
   }else if(strlen($password) > 20 || strlen($password) < 8 || !preg_match("/^[a-zA-Z0-9]+$/", $password)){
     $errors['password'] = "パスワードは半角英数字８〜２０文字で入力してください。"; 
-    
   }
+  
 ?>

@@ -53,8 +53,8 @@
       $errors['user'] = "既に登録されているアドレスです。";
     }
   
-    require_once( "form_validation.php" );
-    
+    require_once( "../lib/Functions/form_validation.php" );
+    formValidation();
   }
  
   //エラーが無ければセッションに登録
