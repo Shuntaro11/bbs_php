@@ -33,7 +33,7 @@
 
     <p><a class="btn" href="index.php">ホーム</a></p>
 
-    <script type="text/javascript" src="../js/form_validation.js"></script>
+    <script type="text/javascript" src="./js/form_validation.js"></script>
 
   </body>
 </html>

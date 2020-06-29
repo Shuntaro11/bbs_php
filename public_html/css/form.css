@@ -27,8 +27,11 @@ input{
   border: solid 2px black;
   margin-top: 10px;
   width: 100px;
+  cursor: pointer;
 }
-
+.btn:hover{
+  opacity: 0.8;
+}
 .btn:active {
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.30);
 }
