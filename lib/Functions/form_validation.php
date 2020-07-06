@@ -4,7 +4,7 @@
   if(strlen($email) === 0){
     $errors['email'] = "アドレスが入力されていません。";
   }elseif(!preg_match("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/", $email)){
-      $errors['email_check'] = "メールアドレスの形式が正しくありません。";
+    $errors['email_check'] = "メールアドレスの形式が正しくありません。";
   }
 
   if(strlen($user_name) === 0){

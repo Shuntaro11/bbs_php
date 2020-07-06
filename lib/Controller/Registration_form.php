@@ -10,6 +10,7 @@
   if(empty($_GET)) {
     header("Location: pre_registration_form.php");
     exit();
+
   }else{
     //GETデータを変数に入れる
     $urltoken = isset($_GET[urltoken]) ? $_GET[urltoken] : NULL;
@@ -17,6 +18,7 @@
     //メール入力判定
     if ($urltoken == ''){
       $errors['urltoken'] = "もう一度登録をやりなおして下さい。";
+      
     }else{
       try{
         
