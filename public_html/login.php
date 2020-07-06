@@ -3,17 +3,19 @@ require_once( "../config/dbconnect.php" );
 dbconnection();
 
 session_start();
-$username = $_POST['username'];
+$user_name = $_POST['user_name'];
 
-$sql = "SELECT * FROM users WHERE username = :username";
+$sql = "SELECT * FROM users WHERE user_name = :user_name";
 $stmt = $pdo->prepare($sql);
-$stmt->bindValue(':username', $username);
+$stmt->bindValue(':user_name', $user_name);
 $stmt->execute();
 $member = $stmt->fetch();
 
+include('./header.php');
+
 if(password_verify($_POST['password'], $member['password'])){
   $_SESSION['id'] = $member['id'];
-  $_SESSION['username'] = $member['username'];
+  $_SESSION['user_name'] = $member['user_name'];
   $msg = "ログインしました。";
   $link = '<a class="btn" href="index.php">ホーム</a>';
 } else {

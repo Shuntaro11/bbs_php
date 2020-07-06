@@ -6,7 +6,7 @@ include('./header.php');
     <form action="login.php" method="post">
     <div>
       <label>名前<label>
-      <p><input type="text" name="username" required></p>
+      <p><input type="text" name="user_name" required></p>
     </div>
     <div>
         <label>パスワード<label>
