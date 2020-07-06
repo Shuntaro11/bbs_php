@@ -1,10 +1,10 @@
 <?php
-
+  
   // バリデーション
   if(strlen($email) === 0){
     $errors['email'] = "アドレスが入力されていません。";
   }elseif(!preg_match("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/", $email)){
-      $errors['email_check'] = "メールアドレスの形式が正しくありません。";
+    $errors['email_check'] = "メールアドレスの形式が正しくありません。";
   }
 
   if(strlen($user_name) === 0){
@@ -17,6 +17,6 @@
     $errors['password'] = "パスワードが入力されていません。";
   }else if(strlen($password) > 20 || strlen($password) < 8 || !preg_match("/^[a-zA-Z0-9]+$/", $password)){
     $errors['password'] = "パスワードは半角英数字８〜２０文字で入力してください。"; 
-    
   }
+  
 ?>

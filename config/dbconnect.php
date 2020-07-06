@@ -5,7 +5,7 @@
     try {
       // データベースに接続
       $pdo = new PDO(
-        'mysql:dbname=' . DB_DBNAME . ';host=' . DB_HOSTNAME . ';charset=utf8mb4',
+        DSN,
         DB_USERNAME,
         DB_PASSWORD,
         //例外処理を投げる（スロー）ようにする
