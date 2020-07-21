@@ -1,13 +1,27 @@
 .post-title{
   font-size: 20px;
-  margin: 30px auto 10px;
 }
 .post-content{
   font-size: 15px;
-  border: 1px solid dimgray;
-  border-radius: 5px;
   width: 500px;
   padding: 20px;
   margin: 20px auto;
-  text-align: left;
+  border: 1px solid dimgray;
+}
+.post-container{
+  background-color: whitesmoke;
+  padding: 20px;
+  width: 700px;
+  margin: 30px auto;
+}
+.comment-container{
+  margin-bottom: 30px;
+}
+.comment-list{
+  margin: 20px;
+}
+.comment-btn{
+  text-align: right;
+  width: 500px;
+  margin: auto;
 }

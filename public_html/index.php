@@ -14,15 +14,16 @@
         echo '<div><a class="btn" href="logout.php">ログアウト</a></div>';
         echo '<div><a class="btn" href="post_form.php">投稿する</a></div>';
 
-        $sql = "SELECT * FROM posts JOIN users ON posts.user_id =  users.id";
+        $sql = "SELECT posts.id AS post_id, posts.created_at AS created_at, user_name, title FROM posts INNER JOIN users ON posts.user_id = users.id;";
         $posts = $pdo->query($sql);
 
         echo '<div class="top-text">投稿一覧</div>';
 
         foreach ($posts as $post) {
-          $date = new DateTime($post['created_at']);
 
-          echo '<div class="each-post"><a href="post_show.php?id=' . $post['id'] .  '">' . $date->format('Y/n/d G:i ') . '<br> 投稿者：' . $post['user_name'] . '<br> title：' . $post['title'] . '</a></div>';
+          $date = new DateTime($post['created_at']);
+          echo '<div class="each-post"><a href="post_show.php?id=' . $post['post_id'] .  '">' . $date->format('Y/n/d G:i ') . '<br> 投稿者：' . $post['user_name'] . '<br> title：' . $post['title'] . '</a></div>';
+
         }
 
       } else {//ログインしていない時
