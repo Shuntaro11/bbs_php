@@ -5,7 +5,12 @@
   session_start();
 
   define('POSTS_PER_PAGE', 5);
-  $page = 1;
+  
+  if (preg_match('/^[1-9][0-9]*$/', $_GET['page'])) {
+    $page = (int)$_GET['page'];
+  } else {
+      $page = 1;
+  }
 
   include('./header.php');
   
@@ -33,9 +38,14 @@
         $total = $pdo->query("select count(*) from posts")->fetchColumn();
         $totalPages = ceil($total / POSTS_PER_PAGE);
 
+        $from = $offset + 1;
+        $to = ($offset + POSTS_PER_PAGE) < $total ? ($offset + POSTS_PER_PAGE) : $total;
+
         for($i = 1; $i <= $totalPages; $i++){
           echo '<a class="page-link" href="?page=' . $i .'">' . $i . '</a>';
         }
+
+        echo '<p class="which-post">全' . $total . '件中、' . $from . '件~' . $to . '件</p>';
 
       } else {//ログインしていない時
         echo '<a class="btn" href="pre_registration_form.php">サインアップ</a>
