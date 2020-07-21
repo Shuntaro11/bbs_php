@@ -25,11 +25,12 @@
   $stmt->execute();
   $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-  $sql = "SELECT * FROM comments WHERE post_id = $post_id ORDER BY id DESC";
+  $sql = "SELECT comments.id AS comment_id, comment, comments.user_id AS user_id, comments.created_at AS created_at, users.user_name AS user_name
+  FROM comments INNER JOIN users ON comments.user_id = users.id WHERE post_id = $post_id ORDER BY comment_id DESC";
   $stmt = $pdo->prepare($sql);
   $stmt->execute();
   $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+  
 ?>
 <?php
 include('./header.php');
@@ -67,7 +68,7 @@ include('./header.php');
             <?php
                 foreach ($comments as $comment) {
                     $date = new DateTime($comment['created_at']);
-                    echo '<div class="each-comment">' . $date->format('Y/n/d G:i ') . '<br>' . $comment['comment'] . '</div>';
+                    echo '<div class="each-comment"><p class="comment-info">' . $date->format('Y/n/d G:i ') . $comment['user_name'] . '</p>' . $comment['comment'] . '</div>';
                 }
             ?>
         </div>

@@ -15,7 +15,8 @@
   margin: 30px auto;
 }
 .comment-container{
-  margin-bottom: 30px;
+  margin: 0 auto 30px;
+  width: 500px;
 }
 .comment-list{
   margin: 20px;
@@ -27,4 +28,8 @@
 }
 .each-comment{
   margin-bottom: 10px;
+}
+.comment-info{
+  font-size: 13px;
+  margin: 0;
 }
