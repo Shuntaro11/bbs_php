@@ -22,10 +22,10 @@
 
   $stmt = $pdo -> prepare($sql);
 
-  $stmt->bindValue(':title', $title);
-  $stmt->bindValue(':content', $content);
-  $stmt->bindValue(':uniquid', $uniquid);
-  $stmt->bindValue(':user_id', $user_id);
+  $stmt->bindValue(':title', $title, PDO::PARAM_STR);
+  $stmt->bindValue(':content', $content, PDO::PARAM_STR);
+  $stmt->bindValue(':uniquid', $uniquid, PDO::PARAM_STR);
+  $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
   $stmt->execute();
 
   $msg = '投稿しました';
