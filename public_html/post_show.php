@@ -56,7 +56,6 @@ include('./header.php');
       <div class="comment-container">
         <form action="comment.php" method="POST">
             <p><label for="comment">コメントする</label></p>
-            <!-- <p class="error-massage"></p> -->
             <div><textarea cols="70" rows="3" id="comment" name="comment" placeholder="本文を入力してください"></textarea></div>
             <input type="hidden" name="post_id" value="<?=$post[0]['id']?>">
             <input type="hidden" name="token" value="<?=$token?>">
@@ -70,12 +69,23 @@ include('./header.php');
                   <?php $date = new DateTime($comment['created_at']); ?>
                   <div class="each-comment">
 
-                    <p class="comment-info"><?php echo $date->format('Y/n/d G:i ') . $comment['user_name']; ?></p>
+                    <div class="comment-info">
+                      <?php echo $date->format('Y/n/d G:i ') . $comment['user_name']; ?>
+                      <?php if($comment['user_id'] === $_SESSION['id']): ?>
+                      <a class="comment-delete-btn" onclick="confirmDelete()" href="" >削除</a>
+                      <script>
+                          function confirmDelete() {
+                              var select = confirm("コメントを削除しますか？");
+                              if( select ) {
+                                  window.location.href = "comment-delete.php?id=<?php echo $comment['comment_id'] ?>";
+                              }
+                          }
+                      </script>
+                      <?php endif; ?>
+                  </div>
                     <p><?php echo $comment['comment']; ?></p>
 
                   </div>
-
-                  <a href="comment-delete.php?id=<?php echo $comment['comment_id'] ?>">削除</a>
                 
             <?php endforeach; ?>
         </div>
