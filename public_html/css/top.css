@@ -1,0 +1,13 @@
+.each-post{
+  margin: 20px auto;
+}
+.each-post a{
+  color: steelblue;
+}
+.each-post a:hover{
+  color: navy;
+}
+.top-text{
+  font-size: 25px;
+  margin-top: 30px;
+}

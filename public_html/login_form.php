@@ -12,7 +12,7 @@ include('./header.php');
         <label>パスワード<label>
         <p><input type="password" name="password" required></p>
     </div>
-    <input class="btn" type="submit" value="ログイン">
+    <input class="btn submit-btn" type="submit" value="ログイン">
     </form>
     <a class="btn" href="index.php">ホーム</a>
   </body>
