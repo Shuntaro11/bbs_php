@@ -7,30 +7,60 @@
     exit();
   }
 
-  require_once( "../config/dbconnect.php" );
-  dbconnection();
+  if(empty($_POST)) {
+
+    header("Location: /bbs_php/public_html/post_form.php");
+    exit();
+
+  }else{
+    
+    $errors = array();
+
+    //POSTされたデータを変数に入れる
+    $title = isset($_POST['title']) ? $_POST['title'] : NULL;
+    $content = isset($_POST['content']) ? $_POST['content'] : NULL;
+
+    require_once( "../lib/Functions/post_form_validation.php" );
+
+    if (count($errors) === 0){
+	
+      //データベース接続
+      require_once( "../config/dbconnect.php" );
+      dbconnection();
+            
+      //ここでpostsテーブルに登録する
+      try{
+        
+        require_once( "../lib/Model/Post_registration.php" );
+
+        $msg = '投稿しました';
   
-  session_start();
-  $user_id = $_SESSION['id'];
-  $user_name = $_SESSION['user_name'];
-  $uniquid = uniqid(rand().'_');
+      }catch (PDOException $e){
 
-  $title = $_POST['title'];
-  $content = $_POST['content'];
-  
-  $sql = "INSERT INTO bbs_php.posts(title, content, uniquid, created_at, user_id) VALUES(:title, :content,  :uniquid, now(), :user_id)";
+        print('Error:'.$e->getMessage());
+        die();
 
-  $stmt = $pdo -> prepare($sql);
+      }
+      
+    }
+  }
 
-  $stmt->bindValue(':title', $title, PDO::PARAM_STR);
-  $stmt->bindValue(':content', $content, PDO::PARAM_STR);
-  $stmt->bindValue(':uniquid', $uniquid, PDO::PARAM_STR);
-  $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
-  $stmt->execute();
-
-  $msg = '投稿しました';
+  include('./header.php');
 
 ?>
 
-<p><?php echo $msg; ?></p>
-<a href="index.php">ホーム</a>
+    <body>
+        <?php if (count($errors) === 0): ?>
+            <p><?php echo $msg; ?></p>
+        <?php elseif(count($errors) > 0): ?>
+            <h1>認証メールを送信できません</h1>
+            <?php
+            foreach($errors as $value){
+              echo "<p class='error-massage'>" . $value . "</p>";
+            }
+            ?>
+            <input class="btn" type="button" value="戻る" onClick="history.back()">
+        <?php endif; ?>
+        <p><a class="btn" href="index.php">ホーム</a></p>
+    </body>
+</html>
