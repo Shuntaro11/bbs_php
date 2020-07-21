@@ -1,0 +1,13 @@
+.post-title{
+  font-size: 20px;
+  margin: 30px auto 10px;
+}
+.post-content{
+  font-size: 15px;
+  border: 1px solid dimgray;
+  border-radius: 5px;
+  width: 500px;
+  padding: 20px;
+  margin: 20px auto;
+  text-align: left;
+}
