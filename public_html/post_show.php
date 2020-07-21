@@ -6,6 +6,10 @@
     exit;
   }
 
+  //クロスサイトリクエストフォージェリ（CSRF）対策
+  $_SESSION['token'] = base64_encode(openssl_random_pseudo_bytes(32));
+  $token = $_SESSION['token'];
+
   require_once( "../config/dbconnect.php" );
   dbconnection();
 
@@ -21,6 +25,12 @@
   $stmt->execute();
   $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+  $sql = "SELECT comments.id AS comment_id, comment, comments.user_id AS user_id, comments.created_at AS created_at, users.user_name AS user_name
+  FROM comments INNER JOIN users ON comments.user_id = users.id WHERE post_id = $post_id ORDER BY comment_id DESC";
+  $stmt = $pdo->prepare($sql);
+  $stmt->execute();
+  $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  
 ?>
 <?php
 include('./header.php');
@@ -47,11 +57,37 @@ include('./header.php');
         <form action="comment.php" method="POST">
             <p><label for="comment">コメントする</label></p>
             <div><textarea cols="70" rows="3" id="comment" name="comment" placeholder="本文を入力してください"></textarea></div>
+            <input type="hidden" name="post_id" value="<?=$post[0]['id']?>">
+            <input type="hidden" name="token" value="<?=$token?>">
             <div class="comment-btn"><button type="submit">送信</button></div>
           
         </form>
         <div class="comment-list">
             <h3>コメント一覧</h3>
+            <?php foreach ($comments as $comment) : ?>
+
+                  <?php $date = new DateTime($comment['created_at']); ?>
+                  <div class="each-comment">
+
+                    <div class="comment-info">
+                      <?php echo $date->format('Y/n/d G:i ') . $comment['user_name']; ?>
+                      <?php if($comment['user_id'] === $_SESSION['id']): ?>
+                      <a class="comment-delete-btn" onclick="confirmDelete()" href="" >削除</a>
+                      <script>
+                          function confirmDelete() {
+                              var select = confirm("コメントを削除しますか？");
+                              if( select ) {
+                                  window.location.href = "comment-delete.php?id=<?php echo $comment['comment_id'] ?>";
+                              }
+                          }
+                      </script>
+                      <?php endif; ?>
+                  </div>
+                    <p><?php echo $comment['comment']; ?></p>
+
+                  </div>
+                
+            <?php endforeach; ?>
         </div>
         
       </div>
