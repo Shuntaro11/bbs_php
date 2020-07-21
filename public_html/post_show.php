@@ -6,6 +6,10 @@
     exit;
   }
 
+  //クロスサイトリクエストフォージェリ（CSRF）対策
+  $_SESSION['token'] = base64_encode(openssl_random_pseudo_bytes(32));
+  $token = $_SESSION['token'];
+
   require_once( "../config/dbconnect.php" );
   dbconnection();
 
@@ -20,6 +24,11 @@
   $stmt = $pdo->prepare($sql);
   $stmt->execute();
   $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+  $sql = "SELECT * FROM comments WHERE post_id = $post_id ORDER BY id DESC";
+  $stmt = $pdo->prepare($sql);
+  $stmt->execute();
+  $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 <?php
@@ -46,12 +55,21 @@ include('./header.php');
       <div class="comment-container">
         <form action="comment.php" method="POST">
             <p><label for="comment">コメントする</label></p>
+            <!-- <p class="error-massage"></p> -->
             <div><textarea cols="70" rows="3" id="comment" name="comment" placeholder="本文を入力してください"></textarea></div>
+            <input type="hidden" name="post_id" value="<?=$post[0]['id']?>">
+            <input type="hidden" name="token" value="<?=$token?>">
             <div class="comment-btn"><button type="submit">送信</button></div>
           
         </form>
         <div class="comment-list">
             <h3>コメント一覧</h3>
+            <?php
+                foreach ($comments as $comment) {
+                    $date = new DateTime($comment['created_at']);
+                    echo '<div class="each-comment">' . $date->format('Y/n/d G:i ') . '<br>' . $comment['comment'] . '</div>';
+                }
+            ?>
         </div>
         
       </div>
