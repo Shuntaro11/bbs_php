@@ -26,5 +26,7 @@
   margin: auto;
 }
 .page-link{
-  
+  border: 1px solid dimgray;
+  padding: 5px;
+  margin: 2px;
 }
