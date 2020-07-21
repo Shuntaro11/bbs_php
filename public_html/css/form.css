@@ -35,3 +35,7 @@ input{
 .btn:active {
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.30);
 }
+.submit-btn{
+  background: rgb(179, 42, 42);
+  border: solid 2px rgb(126, 9, 9);
+}

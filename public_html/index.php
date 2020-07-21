@@ -20,7 +20,6 @@
         foreach ($posts as $post) {
           $date = new DateTime($post['created_at']);
           echo '<a href="post_show.php?id=' . $post['id'] .  '">' . $date->format('Y/n/d G:i ');
-          echo ' 投稿者：' . $post['user_name'];
           echo '<br> title：' . $post['title'] . '</a>';
           echo '<br>';
         }
