@@ -65,12 +65,19 @@ include('./header.php');
         </form>
         <div class="comment-list">
             <h3>コメント一覧</h3>
-            <?php
-                foreach ($comments as $comment) {
-                    $date = new DateTime($comment['created_at']);
-                    echo '<div class="each-comment"><p class="comment-info">' . $date->format('Y/n/d G:i ') . $comment['user_name'] . '</p>' . $comment['comment'] . '</div>';
-                }
-            ?>
+            <?php foreach ($comments as $comment) : ?>
+
+                  <?php $date = new DateTime($comment['created_at']); ?>
+                  <div class="each-comment">
+
+                    <p class="comment-info"><?php echo $date->format('Y/n/d G:i ') . $comment['user_name']; ?></p>
+                    <p><?php echo $comment['comment']; ?></p>
+
+                  </div>
+
+                  <a href="comment-delete.php?id=<?php echo $comment['comment_id'] ?>">削除</a>
+                
+            <?php endforeach; ?>
         </div>
         
       </div>
