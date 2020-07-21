@@ -4,6 +4,9 @@
 
   session_start();
 
+  define('POSTS_PER_PAGE', 5);
+  $page = 1;
+
   include('./header.php');
   
 ?>
@@ -14,7 +17,8 @@
         echo '<div><a class="btn" href="logout.php">ログアウト</a></div>';
         echo '<div><a class="btn" href="post_form.php">投稿する</a></div>';
 
-        $sql = "SELECT posts.id AS post_id, posts.created_at AS created_at, user_name, title FROM posts INNER JOIN users ON posts.user_id = users.id;";
+        $offset = POSTS_PER_PAGE * ($page - 1);
+        $sql = "SELECT posts.id AS post_id, posts.created_at AS created_at, user_name, title FROM posts INNER JOIN users ON posts.user_id = users.id ORDER BY post_id DESC limit " . $offset . "," . POSTS_PER_PAGE;
         $posts = $pdo->query($sql);
 
         echo '<div class="top-text">投稿一覧</div>';
@@ -24,6 +28,13 @@
           $date = new DateTime($post['created_at']);
           echo '<div class="each-post"><a href="post_show.php?id=' . $post['post_id'] .  '">' . $date->format('Y/n/d G:i ') . '<br> 投稿者：' . $post['user_name'] . '<br> title：' . $post['title'] . '</a></div>';
 
+        }
+        
+        $total = $pdo->query("select count(*) from posts")->fetchColumn();
+        $totalPages = ceil($total / POSTS_PER_PAGE);
+
+        for($i = 1; $i <= $totalPages; $i++){
+          echo '<a class="page-link" href="?page=' . $i .'">' . $i . '</a>';
         }
 
       } else {//ログインしていない時
